@@ -1,66 +1,69 @@
 import { useEffect, useState } from 'react';
 
 const useOrdersLogic = ({ location, navigate, clientId }) => {
-  const role = location.state?.role || 'guest';
+  const [role, setRole] = useState('user'); // або 'admin'
+  const [firstName, setFirstName] = useState('Іван');
+  const [lastName, setLastName] = useState('Петренко');
 
-  const [orders, setOrders] = useState([]);
-  const [filteredOrders, setFilteredOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [orders, setOrders] = useState([]);
   const [filter, setFilter] = useState('');
   const [showNewOrderForm, setShowNewOrderForm] = useState(false);
   const [newOrderName, setNewOrderName] = useState('');
   const [selectedOrderId, setSelectedOrderId] = useState(null);
 
   useEffect(() => {
-    if (role !== 'client') {
-      alert('Доступ заборонено. Ви не Клієнт.');
-      navigate('/');
-      return;
-    }
-
+    setLoading(true);
+    // Імітація завантаження замовлень
     setTimeout(() => {
-      const mockOrders = [
-        { id: 1, name: 'Замовлення 1', status: 'В обробці' },
-        { id: 2, name: 'Замовлення 2', status: 'Доставлено' },
-      ];
-      setOrders(mockOrders);
-      setFilteredOrders(mockOrders);
+      setOrders([
+        { id: 1, name: 'Прибирання "Все включено"', status: 'Нове', date: '12.05.2025' },
+        { id: 2, name: 'Миття вікон', status: 'В обробці', date: '10.04.2025' },
+        { id: 3, name: 'Просте прибирання', status: 'Завершено', date: '30.01.2023' },
+      ]);
       setLoading(false);
     }, 1000);
-  }, [role, navigate, clientId]);
+  }, [clientId]);
 
-  useEffect(() => {
-    if (!filter) {
-      setFilteredOrders(orders);
-    } else {
-      const filtered = orders.filter(order =>
-        order.name.toLowerCase().includes(filter.toLowerCase())
-      );
-      setFilteredOrders(filtered);
-    }
-  }, [filter, orders]);
+  const filteredOrders = orders.filter(order =>
+    order.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   const handleCreateNewOrder = (e) => {
     e.preventDefault();
     if (!newOrderName.trim()) return;
+
     const newOrder = {
       id: Date.now(),
       name: newOrderName,
       status: 'Новий',
+      date: new Date().toLocaleDateString('uk-UA')
     };
-    const updatedOrders = [newOrder, ...orders];
-    setOrders(updatedOrders);
-    setFilteredOrders(updatedOrders);
+
+    setOrders(prev => [...prev, newOrder]);
     setNewOrderName('');
     setShowNewOrderForm(false);
   };
 
-  const handleSelectOrder = (orderId) => {
-    setSelectedOrderId(orderId);
+  const handleSelectOrder = (id) => {
+    setSelectedOrderId(id);
+  };
+
+  const handleDeleteOrder = (id) => {
+    if (window.confirm('Ви впевнені, що хочете видалити замовлення?')) {
+      setOrders(prev => prev.filter(order => order.id !== id));
+      if (selectedOrderId === id) setSelectedOrderId(null);
+    }
+  };
+
+  const handleEditOrder = (id) => {
+    navigate(`/orders/${id}/edit`);
   };
 
   return {
     role,
+    firstName,
+    lastName,
     loading,
     filter,
     filteredOrders,
@@ -72,6 +75,8 @@ const useOrdersLogic = ({ location, navigate, clientId }) => {
     setNewOrderName,
     handleCreateNewOrder,
     handleSelectOrder,
+    handleDeleteOrder,
+    handleEditOrder,
   };
 };
 
