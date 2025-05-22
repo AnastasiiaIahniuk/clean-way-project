@@ -7,7 +7,7 @@ import { Pencil, Trash2 } from 'lucide-react';
 const OrdersListPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { clientId } = useParams();
+  const { userId } = useParams();
 
   const roleNames = {
   admin: 'Адміністратор',
@@ -33,7 +33,7 @@ const OrdersListPage = () => {
     handleSelectOrder,
     handleDeleteOrder,
     handleEditOrder
-  } = useOrdersLogic({ location, navigate, clientId });
+  } = useOrdersLogic({ location, navigate, userId });
 
   if (loading) {
     return <div className={styles.container}>Завантаження...</div>;

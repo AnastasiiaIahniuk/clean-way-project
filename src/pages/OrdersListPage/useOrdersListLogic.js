@@ -1,7 +1,54 @@
 import { useEffect, useState } from 'react';
 
-const useOrdersLogic = ({ location, navigate, clientId }) => {
-  const [role, setRole] = useState('user'); // або 'admin'
+const mockedUsers = [{
+  userId: 1,
+  name: "Леся",
+  surname: "Українка",
+  role: "client",
+  email: "client@example.com"
+}];
+
+const mockedOrdersList = [
+  {
+    orderId: 1,
+    date: '12.05.2025',
+    client: 1,
+    cleaner: 11,
+    city: "Харків",
+    address: "вул. Миру, 23б кв. 105",
+    name: 'Прибирання "Все включено"',
+    status: 'Нове',
+    cost: 3200,
+    details: "Не використовувати алергенні засоби."
+  },
+  {
+    orderId: 1,
+    date: '10.07.2024',
+    client: 1,
+    cleaner: 11,
+    city: "Харків",
+    address: "вул. Миру, 23б кв. 105",
+    name: 'Прибирання "Стандарт"',
+    status: 'В обробці',
+    cost: 2300,
+    details: "Зварити вегетаріанський борщ."
+  },
+  {
+    orderId: 1,
+    date: '01.03.2023',
+    client: 1,
+    cleaner: 12,
+    city: "Пісочин",
+    address: "вул. Зелена, 3б, кв. 1",
+    name: 'Помити вікна',
+    status: 'Виконано',
+    cost: 1250,
+    details: "Балкон включно."
+  },
+];
+
+const useOrdersLogic = ({ location, navigate, userId }) => {
+  const [role, setRole] = useState('client'); // або 'admin'
   const [firstName, setFirstName] = useState('Іван');
   const [lastName, setLastName] = useState('Петренко');
 
@@ -14,16 +61,11 @@ const useOrdersLogic = ({ location, navigate, clientId }) => {
 
   useEffect(() => {
     setLoading(true);
-    // Імітація завантаження замовлень
     setTimeout(() => {
-      setOrders([
-        { id: 1, name: 'Прибирання "Все включено"', status: 'Нове', date: '12.05.2025' },
-        { id: 2, name: 'Миття вікон', status: 'В обробці', date: '10.04.2025' },
-        { id: 3, name: 'Просте прибирання', status: 'Завершено', date: '30.01.2023' },
-      ]);
+      setOrders(mockedOrdersList);
       setLoading(false);
     }, 1000);
-  }, [clientId]);
+  }, [userId]);
 
   const filteredOrders = orders.filter(order =>
     order.name.toLowerCase().includes(filter.toLowerCase())

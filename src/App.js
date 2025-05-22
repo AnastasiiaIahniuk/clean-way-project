@@ -10,11 +10,11 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
 
-        {/* Динамічний шлях з параметром clientId */}
+        {/* Динамічний шлях з параметром userId */}
         <Route
-          path="/:clientId/orders"
+          path="client/:userId/orders"
           element={
             <PrivateRoute role={role} allowedRoles={['client']}>
               <OrdersListPage />
