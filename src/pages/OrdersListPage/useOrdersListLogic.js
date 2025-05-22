@@ -49,8 +49,8 @@ const mockedOrdersList = [
 
 const useOrdersLogic = ({ location, navigate, userId }) => {
   const [role, setRole] = useState('client'); // або 'admin'
-  const [firstName, setFirstName] = useState('Іван');
-  const [lastName, setLastName] = useState('Петренко');
+  const [firstName, setFirstName] = useState(mockedUsers[0].name);
+  const [lastName, setLastName] = useState(mockedUsers[0].surname);
 
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
