@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
-import OrdersPage from './pages/OrdersPage/OrdersPage';
+import OrdersListPage from './pages/OrdersListPage/OrdersListPage';
 import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
@@ -17,7 +17,7 @@ const App = () => {
           path="/:clientId/orders"
           element={
             <PrivateRoute role={role} allowedRoles={['client']}>
-              <OrdersPage />
+              <OrdersListPage />
             </PrivateRoute>
           }
         />

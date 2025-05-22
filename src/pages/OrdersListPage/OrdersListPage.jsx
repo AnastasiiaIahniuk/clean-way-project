@@ -1,10 +1,10 @@
 import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import styles from './OrdersPage.module.css';
-import useOrdersLogic from './useOrdersLogic';
+import styles from './OrdersListPage.module.css';
+import useOrdersLogic from './useOrdersListLogic';
 import { Pencil, Trash2 } from 'lucide-react';
 
-const OrdersPage = () => {
+const OrdersListPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { clientId } = useParams();
@@ -109,4 +109,4 @@ const OrdersPage = () => {
   );
 };
 
-export default OrdersPage;
+export default OrdersListPage;
