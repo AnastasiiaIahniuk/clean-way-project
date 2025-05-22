@@ -9,6 +9,13 @@ const OrdersPage = () => {
   const navigate = useNavigate();
   const { clientId } = useParams();
 
+  const roleNames = {
+  admin: 'Адміністратор',
+  client: 'Клієнт',
+  manager: 'Менеджер',
+  cleaner: 'Клінер',
+};
+
   const {
     role,
     firstName,
@@ -84,7 +91,7 @@ const OrdersPage = () => {
             onClick={() => handleSelectOrder(order.id)}
           >
             <div>
-              <strong>{order.name}</strong> — {order.status} — <em>{order.date}</em>
+              <strong>{order.name}</strong> — <em>{order.date}</em>
               <p className={styles.statusText}>Статус: {order.status}</p>
             </div>
             <div className={styles.iconGroup} onClick={(e) => e.stopPropagation()}>
