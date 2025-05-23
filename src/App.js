@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import OrdersListPage from './pages/OrdersListPage/OrdersListPage';
 import PrivateRoute from './components/PrivateRoute';
+import OrderPageWrapperForNew from './wrappers/wrapperForNew';
 
 const App = () => {
   const role = localStorage.getItem('userRole') || 'guest';
@@ -11,16 +12,9 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-
-        {/* Динамічний шлях з параметром userId */}
-        <Route
-          path="client/:userId/orders"
-          element={
-            <PrivateRoute role={role} allowedRoles={['client']}>
-              <OrdersListPage />
-            </PrivateRoute>
-          }
-        />
+        <Route path="client/:userId/orders" 
+        element={<PrivateRoute role={role} allowedRoles={['client']}><OrdersListPage /></PrivateRoute>}/>
+        <Route path="/client/:userId/orders/newOrder" element={<OrderPageWrapperForNew />} />
       </Routes>
     </Router>
   );

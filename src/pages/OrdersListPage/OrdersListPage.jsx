@@ -23,13 +23,8 @@ const OrdersListPage = () => {
     loading,
     filter,
     filteredOrders,
-    showNewOrderForm,
-    newOrderName,
     selectedOrderId,
     setFilter,
-    setShowNewOrderForm,
-    setNewOrderName,
-    handleCreateNewOrder,
     handleSelectOrder,
     handleDeleteOrder,
     handleEditOrder
@@ -59,27 +54,10 @@ const OrdersListPage = () => {
           className={styles.input}
         />
         <button
-          onClick={() => setShowNewOrderForm(!showNewOrderForm)}
           className={styles.button}
-        >
-          {showNewOrderForm ? 'Скасувати' : 'Створити нове замовлення'}
-        </button>
+          onClick={() => navigate(`/client/${userId}/orders/newOrder`)}
+        >Створити нове замовлення</button>
       </div>
-
-      {/* New Order Form */}
-      {showNewOrderForm && (
-        <form onSubmit={handleCreateNewOrder} className={styles.newOrderForm}>
-          <input
-            type="text"
-            placeholder="Назва нового замовлення"
-            value={newOrderName}
-            onChange={(e) => setNewOrderName(e.target.value)}
-            className={styles.input}
-            required
-          />
-          <button type="submit" className={styles.button}>Додати</button>
-        </form>
-      )}
 
       {/* Orders List */}
       <div className={styles.orderList}>
