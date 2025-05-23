@@ -1,19 +1,29 @@
 import React, { useState } from 'react';
 import styles from './EditOrderPage.module.css';
 
+const clientsList = [
+  { id: 1, fullName: 'Іван Іваненко' },
+  { id: 2, fullName: 'Марія Петренко' },
+  { id: 3, fullName: 'Олег Коваленко' },
+];
+
+const executorsList = [
+  { id: 1, fullName: 'Анна Сидоренко' },
+  { id: 2, fullName: 'Петро Мельник' },
+  { id: 3, fullName: 'Оксана Кравченко' },
+];
+
 const EditOrderPage = () => {
   const [formData, setFormData] = useState({
+    name: '',
     date: '',
     city: '',
-    clientFirstName: '',
-    clientLastName: '',
-    executorFirstName: '',
-    executorLastName: '',
+    clientId: '',
+    executorId: '',
     address: '',
     status: 'Новий',
     price: '',
     details: '',
-    name: '',
   });
 
   const handleChange = (e) => {
@@ -29,8 +39,9 @@ const EditOrderPage = () => {
 
   return (
     <div className={styles.container}>
-<h2 className={styles.roleTitle}>Створити нове замовлення</h2>
-      <form className={styles.newOrderForm} onSubmit={handleSubmit}>
+      <h2 className={styles.roleTitle}>Створити нове замовлення</h2>
+
+      <form className={styles.newOrderForm} onSubmit={handleSubmit} id="orderForm">
         <div className={styles.formColumn}>
           <label className={styles.fieldLabel}>
             Назва замовлення:
@@ -69,56 +80,44 @@ const EditOrderPage = () => {
             />
           </label>
 
-          <div className={styles.doubleInputWrapper}>
-            <label className={styles.fieldLabel}>
-              Клієнт Ім'я:
-              <input
-                name="clientFirstName"
-                placeholder="Ім'я"
-                value={formData.clientFirstName}
-                onChange={handleChange}
-                required
-                className={styles.inputField}
-              />
-            </label>
-            <label className={styles.fieldLabel}>
-              Клієнт Прізвище:
-              <input
-                name="clientLastName"
-                placeholder="Прізвище"
-                value={formData.clientLastName}
-                onChange={handleChange}
-                required
-                className={styles.inputField}
-              />
-            </label>
-          </div>
+          <label className={styles.fieldLabel}>
+            Клієнт:
+            <select
+              name="clientId"
+              value={formData.clientId}
+              onChange={handleChange}
+              required
+              className={styles.inputField}
+            >
+              <option value="" disabled>Оберіть клієнта</option>
+              {clientsList.map(client => (
+                <option key={client.id} value={client.id}>
+                  {client.fullName}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className={styles.fieldLabel}>
+            Виконавець (Клінер):
+            <select
+              name="executorId"
+              value={formData.executorId}
+              onChange={handleChange}
+              required
+              className={styles.inputField}
+            >
+              <option value="" disabled>Оберіть виконавця</option>
+              {executorsList.map(executor => (
+                <option key={executor.id} value={executor.id}>
+                  {executor.fullName}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
 
         <div className={styles.formColumn}>
-          <div className={styles.doubleInputWrapper}>
-            <label className={styles.fieldLabel}>
-              Виконавець Ім'я:
-              <input
-                name="executorFirstName"
-                placeholder="Ім'я"
-                value={formData.executorFirstName}
-                onChange={handleChange}
-                className={styles.inputField}
-              />
-            </label>
-            <label className={styles.fieldLabel}>
-              Виконавець Прізвище:
-              <input
-                name="executorLastName"
-                placeholder="Прізвище"
-                value={formData.executorLastName}
-                onChange={handleChange}
-                className={styles.inputField}
-              />
-            </label>
-          </div>
-
           <label className={styles.fieldLabel}>
             Адреса:
             <input
@@ -168,9 +167,12 @@ const EditOrderPage = () => {
           </label>
         </div>
       </form>
-      <button type="submit" className={styles.button}>
-            Зберегти замовлення
-          </button>
+
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <button type="submit" form="orderForm" className={styles.button}>
+          Зберегти замовлення
+        </button>
+      </div>
     </div>
   );
 };
