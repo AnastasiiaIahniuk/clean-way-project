@@ -3,15 +3,15 @@ import styles from './EditOrderPage.module.css';
 import { useNavigate } from 'react-router-dom';
 
 const clientsList = [
-  { id: 1, fullName: 'Іван Іваненко' },
-  { id: 2, fullName: 'Марія Петренко' },
-  { id: 3, fullName: 'Олег Коваленко' },
+  { userId: 1, fullName: 'Іван Іваненко' },
+  { userId: 2, fullName: 'Марія Петренко' },
+  { userId: 3, fullName: 'Олег Коваленко' },
 ];
 
 const executorsList = [
-  { id: 1, fullName: 'Анна Сидоренко' },
-  { id: 2, fullName: 'Петро Мельник' },
-  { id: 3, fullName: 'Оксана Кравченко' },
+  { userId: 1, fullName: 'Анна Сидоренко' },
+  { userId: 2, fullName: 'Петро Мельник' },
+  { userId: 3, fullName: 'Оксана Кравченко' },
 ];
 
 const EditOrderPage = ({ mode = 'new', initialData = null }) => {
@@ -43,17 +43,13 @@ const EditOrderPage = ({ mode = 'new', initialData = null }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Логіка для створення або редагування
     console.log('Замовлення:', formData);
-
-    // Показуємо попап після успішного сабміту
     setShowPopup(true);
   };
 
   const handleClosePopup = () => {
-    // Закриваємо попап і перенаправляємо назад
     setShowPopup(false);
-    navigate(-1);  // Перенаправлення на попередню сторінку
+    navigate(-1);
   };
 
   return (
@@ -110,7 +106,7 @@ const EditOrderPage = ({ mode = 'new', initialData = null }) => {
             >
               <option value="" disabled>Оберіть клієнта</option>
               {clientsList.map(client => (
-                <option key={client.id} value={client.id}>
+                <option key={client.userId} value={client.userId}>
                   {client.fullName}
                 </option>
               ))}
@@ -128,7 +124,7 @@ const EditOrderPage = ({ mode = 'new', initialData = null }) => {
             >
               <option value="" disabled>Оберіть виконавця</option>
               {executorsList.map(executor => (
-                <option key={executor.id} value={executor.id}>
+                <option key={executor.userId} value={executor.userId}>
                   {executor.fullName}
                 </option>
               ))}
@@ -197,7 +193,7 @@ const EditOrderPage = ({ mode = 'new', initialData = null }) => {
       {showPopup && (
         <div className={styles.popup}>
           <div className={styles.popupContent}>
-            <h3>Нове замовлення створене!</h3>
+            <h3>{mode === 'new' ? 'Нове замовлення створене!' : 'Замовлення відредаговано!'}</h3>
             <button onClick={handleClosePopup} className={styles.button}>ОК</button>
           </div>
         </div>

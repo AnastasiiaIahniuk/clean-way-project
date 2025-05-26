@@ -47,7 +47,7 @@ const mockedOrdersList = [
   },
 ];
 
-const useOrdersLogic = ({ location, navigate, userId }) => {
+const useOrdersLogic = ({ location, navigate, userId, orderId } = {}) => {
   const [role, setRole] = useState('client'); // або 'admin'
   const [firstName, setFirstName] = useState(mockedUsers[0].name);
   const [lastName, setLastName] = useState(mockedUsers[0].surname);
@@ -76,7 +76,7 @@ const useOrdersLogic = ({ location, navigate, userId }) => {
     if (!newOrderName.trim()) return;
 
     const newOrder = {
-      id: Date.now(),
+      orderId: Date.now(),
       name: newOrderName,
       status: 'Новий',
       date: new Date().toLocaleDateString('uk-UA')
@@ -87,19 +87,23 @@ const useOrdersLogic = ({ location, navigate, userId }) => {
     setShowNewOrderForm(false);
   };
 
-  const handleSelectOrder = (id) => {
-    setSelectedOrderId(id);
+  const handleSelectOrder = (orderId) => {
+    setSelectedOrderId(orderId);
   };
 
-  const handleDeleteOrder = (id) => {
+  const handleDeleteOrder = (orderId) => {
     if (window.confirm('Ви впевнені, що хочете видалити замовлення?')) {
-      setOrders(prev => prev.filter(order => order.id !== id));
-      if (selectedOrderId === id) setSelectedOrderId(null);
+      setOrders(prev => prev.filter(order => order.orderId !== orderId));
+      if (selectedOrderId === orderId) setSelectedOrderId(null);
     }
   };
 
-  const handleEditOrder = (id) => {
-    navigate(`/orders/${id}/edit`);
+  const handleEditOrder = (orderId) => {
+    navigate(`/client/${userId}/orders/${orderId}/edit`);
+  };
+
+  const getOrderById = (orderId) => {
+    return orders.find(order => order.orderId === orderId);
   };
 
   return {
@@ -119,6 +123,7 @@ const useOrdersLogic = ({ location, navigate, userId }) => {
     handleSelectOrder,
     handleDeleteOrder,
     handleEditOrder,
+    getOrderById
   };
 };
 
