@@ -64,19 +64,19 @@ const OrdersListPage = () => {
         {filteredOrders.length === 0 && <p>Замовлень не знайдено.</p>}
         {filteredOrders.map(order => (
           <div
-            key={order.id}
-            className={`${styles.orderCard} ${selectedOrderId === order.id ? styles.selected : ''}`}
-            onClick={() => handleSelectOrder(order.id)}
+            key={order.orderId}
+            className={`${styles.orderCard} ${selectedOrderId === order.orderId ? styles.selected : ''}`}
+            onClick={() => navigate(`/client/${userId}/orders/${order.orderId}/order`)}
           >
             <div>
               <strong>{order.name}</strong> — <em>{order.date}</em>
               <p className={styles.statusText}>Статус: {order.status}</p>
             </div>
             <div className={styles.iconGroup} onClick={(e) => e.stopPropagation()}>
-              <button onClick={() => handleEditOrder(order.id)} className={styles.iconButton}>
+              <button onClick={() => handleEditOrder(order.orderId)} className={styles.iconButton}>
                 <Pencil size={18} />
               </button>
-              <button onClick={() => handleDeleteOrder(order.id)} className={styles.iconButton}>
+              <button onClick={() => handleDeleteOrder(order.orderId)} className={styles.iconButton}>
                 <Trash2 size={18} color="red" />
               </button>
             </div>

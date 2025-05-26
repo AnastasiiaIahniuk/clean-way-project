@@ -1,0 +1,80 @@
+/* Контейнер карточки замовлення */
+.container {
+  max-width: 800px;
+  margin: 80px auto;
+  padding: 20px 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  background-color: #f0f4f8;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: left;
+}
+
+/* Заголовок */
+h2 {
+  text-align: center;
+  padding-bottom: 25px;
+  font-weight: 600;
+  color: #007BFF;
+  font-size: 1.8rem;
+}
+
+/* Стиль тексту в карточці */
+.orderDetailRow {
+  margin-bottom: 18px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.orderDetailLabel {
+  font-weight: 600;
+  margin-right: 8px;
+  color: #555;
+}
+
+/* Кнопка повернення */
+.button {
+  padding: 12px 25px;
+  background-color: #007BFF;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+  display: block;
+  margin: 30px auto 0 auto; /* Центруємо кнопку */
+  width: max-content;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+  resize: vertical;
+  margin-top: 10px;
+}
+
+textarea {
+  min-height: 80px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #007BFF;
+}

@@ -27,8 +27,8 @@ const EditOrderPage = ({ mode = 'new', initialData = null }) => {
     details: '',
   });
 
-  const [showPopup, setShowPopup] = useState(false);  // Стан для попапу
-  const navigate = useNavigate();  // Хук для перенаправлення
+  const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (mode === 'edit' && initialData) {

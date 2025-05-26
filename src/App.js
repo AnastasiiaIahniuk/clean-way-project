@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import OrdersListPage from './pages/OrdersListPage/OrdersListPage';
+import OrderPage from './pages/OrderPage/OrderPage';
 import PrivateRoute from './components/PrivateRoute';
 import OrderPageWrapperForNew from './wrappers/wrapperForNew';
 
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="client/:userId/orders" 
         element={<PrivateRoute role={role} allowedRoles={['client']}><OrdersListPage /></PrivateRoute>}/>
         <Route path="/client/:userId/orders/newOrder" element={<OrderPageWrapperForNew />} />
+        <Route path="/client/:userId/orders/:orderId/order" element={<OrderPage />} />
       </Routes>
     </Router>
   );

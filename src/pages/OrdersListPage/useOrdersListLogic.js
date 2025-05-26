@@ -22,7 +22,7 @@ const mockedOrdersList = [
     details: "Не використовувати алергенні засоби."
   },
   {
-    orderId: 1,
+    orderId: 2,
     date: '10.07.2024',
     client: 1,
     cleaner: 11,
@@ -34,7 +34,7 @@ const mockedOrdersList = [
     details: "Зварити вегетаріанський борщ."
   },
   {
-    orderId: 1,
+    orderId: 3,
     date: '01.03.2023',
     client: 1,
     cleaner: 12,
