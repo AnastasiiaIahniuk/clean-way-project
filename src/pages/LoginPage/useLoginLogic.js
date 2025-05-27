@@ -11,12 +11,12 @@ const useLoginLogic = (navigate) => {
     if (email === 'client@example.com' && password === '123456') {
       localStorage.setItem('userRole', 'client');
       navigate('/client/1/orders', { state: { role: 'client' } });
-    } if (email === 'manager@example.com' && password === '123456') {
+    } else if (email === 'manager@example.com' && password === '123456') {
       localStorage.setItem('userRole', 'manager');
-      navigate('/manager/1/orders', { state: { role: 'manager' } });
-    } if (email === 'cleaner@example.com' && password === '123456') {
+      navigate('/manager/2/orders', { state: { role: 'manager' } });
+    } else if (email === 'cleaner@example.com' && password === '123456') {
       localStorage.setItem('userRole', 'cleaner');
-      navigate('/cleaner/1/orders', { state: { role: 'cleaner' } });
+      navigate('/cleaner/3/orders', { state: { role: 'cleaner' } });
     } else {
       setError('Неправильний email або пароль');
     }

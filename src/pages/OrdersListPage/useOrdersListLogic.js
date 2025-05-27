@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-
+import { useParams } from 'react-router-dom';
 
 const mockedUsers = [{
   userId: 1,
@@ -7,7 +7,21 @@ const mockedUsers = [{
   surname: "Українка",
   role: "client",
   email: "client@example.com"
-}];
+},
+{
+  userId: 2,
+  name: "Іван",
+  surname: "Франко",
+  role: "manager",
+  email: "client@example.com"
+},
+{
+  userId: 3,
+  name: "Тарас",
+  surname: "Шевченко",
+  role: "cleaner",
+  email: "cleaner@example.com"
+},];
 
 const mockedOrdersList = [
   {
@@ -48,8 +62,8 @@ const mockedOrdersList = [
   },
 ];
 
-const useOrdersLogic = ({ location, navigate, userId, orderId } = {}) => {
-  const [role] = useState('client'); // або 'admin'
+const useOrdersLogic = ({ location, navigate, orderId } = {}) => {
+  const { role, userId } = useParams();
   const [firstName] = useState(mockedUsers[0].name);
   const [lastName] = useState(mockedUsers[0].surname);
 
@@ -99,7 +113,7 @@ const useOrdersLogic = ({ location, navigate, userId, orderId } = {}) => {
   };
 
   const handleEditOrder = (orderId) => {
-    navigate(`/client/${userId}/orders/${orderId}/edit`);
+    navigate(`/${role}/${userId}/orders/${orderId}/edit`);
   };
 
   const getOrderById = (orderId) => {

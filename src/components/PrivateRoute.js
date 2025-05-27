@@ -1,9 +1,12 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
-const PrivateRoute = ({ children, role, allowedRoles }) => {
-  if (!allowedRoles.includes(role)) {
-    return <Navigate to="/" replace />;
+const PrivateRoute = ({ children, allowedRoles }) => {
+  const { role } = useParams();
+  const currentRole = role || localStorage.getItem('userRole');
+
+  if (!allowedRoles.includes(currentRole)) {
+    return <Navigate to="/login" replace />;
   }
   return children;
 };
