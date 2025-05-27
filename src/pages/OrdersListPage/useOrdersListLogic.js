@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+const roleNames = {
+  admin: 'Адміністратор',
+  client: 'Клієнт',
+  manager: 'Менеджер',
+  cleaner: 'Клінер',
+};
+
 const mockedUsers = [{
   userId: 1,
   name: "Леся",
@@ -64,9 +71,7 @@ const mockedOrdersList = [
 
 const useOrdersLogic = ({ location, navigate, orderId } = {}) => {
   const { role, userId } = useParams();
-  const [firstName] = useState(mockedUsers[0].name);
-  const [lastName] = useState(mockedUsers[0].surname);
-
+  const numericUserId = Number(userId);
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
   const [filter, setFilter] = useState('');
@@ -78,6 +83,21 @@ const useOrdersLogic = ({ location, navigate, orderId } = {}) => {
     orderId: null,
     message: null,
   });
+
+  const user = mockedUsers.find(u => u.role === role && u.userId === numericUserId);
+
+  const [fullName, setFullName] = useState('');
+  const [roleName, setRoleName] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      setFullName(`${user.name} ${user.surname}`);
+      setRoleName(roleNames[role]);
+    } else {
+      setFullName('');
+      setRoleName('');
+    }
+  }, [user, role]);
 
 
   useEffect(() => {
@@ -138,8 +158,6 @@ const useOrdersLogic = ({ location, navigate, orderId } = {}) => {
 
   return {
     role,
-    firstName,
-    lastName,
     loading,
     filter,
     filteredOrders,
@@ -147,6 +165,8 @@ const useOrdersLogic = ({ location, navigate, orderId } = {}) => {
     newOrderName,
     selectedOrderId,
     cancelPopup,
+    roleName,
+    fullName,
     closeCancelPopup,
     handleConfirmCancel,
     handleCreateNewOrder,

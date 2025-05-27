@@ -8,22 +8,15 @@ const OrdersListPage = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
 
-  //  const roleNames = {
-  //   admin: 'Адміністратор',
-  //   client: 'Клієнт',
-  //   manager: 'Менеджер',
-  //   cleaner: 'Клінер',
-  // };
-
   const {
     role,
-    firstName,
-    lastName,
     loading,
     filter,
     filteredOrders,
     selectedOrderId,
     cancelPopup,
+    fullName,
+    roleName,
     closeCancelPopup,
     handleConfirmCancel,
     handleRejectCancel,
@@ -41,9 +34,9 @@ const OrdersListPage = () => {
       {/* User Info */}
       <div className={styles.userInfo}>
         <h2 className={styles.roleTitle}>
-          {role === 'admin' ? 'Адміністратор' : 'Клієнт'}
+          {roleName || 'Гість'}
         </h2>
-        <p className={styles.userName}>{firstName} {lastName}</p>
+        <p className={styles.userName}>{fullName}</p>
       </div>
 
       {/* Filter and Button */}
@@ -55,10 +48,12 @@ const OrdersListPage = () => {
           onChange={(e) => setFilter(e.target.value)}
           className={styles.input}
         />
+        {role !== 'cleaner' && role !== 'manager' && (
         <button
           className={styles.button}
           onClick={() => navigate(`/client/${userId}/orders/newOrder`)}
         >Створити нове замовлення</button>
+        )}
       </div>
 
       {/* Orders List */}
