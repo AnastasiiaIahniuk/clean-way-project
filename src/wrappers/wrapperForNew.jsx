@@ -1,5 +1,6 @@
-import React from 'react';
+import React , { useContext } from 'react';
 import EditOrderPage from '../pages/EditOrderPage/EditOrderPage';
+import UserRoleContext from './wrapperUserContext';
 
 const OrderPageWrapperForNew = () => {
   const newOrder = {
@@ -15,7 +16,9 @@ const OrderPageWrapperForNew = () => {
     details: ''
   };
 
-  return <EditOrderPage order={newOrder} />;
+  const role = useContext(UserRoleContext);
+
+  return <EditOrderPage order={newOrder} role={role} />;
 };
 
 export default OrderPageWrapperForNew;

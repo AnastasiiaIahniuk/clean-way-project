@@ -14,7 +14,7 @@ const executorsList = [
   { userId: 3, fullName: 'Оксана Кравченко' },
 ];
 
-const EditOrderPage = ({ mode = 'new', initialData = null }) => {
+const EditOrderPage = ({ mode = 'new', initialData = null, role }) => {
   const [formData, setFormData] = useState({
     name: '',
     date: '',
@@ -43,7 +43,6 @@ const EditOrderPage = ({ mode = 'new', initialData = null }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Замовлення:', formData);
     setShowPopup(true);
   };
 
@@ -95,7 +94,7 @@ const EditOrderPage = ({ mode = 'new', initialData = null }) => {
             />
           </label>
 
-          <label className={styles.fieldLabel}>
+          {role !== 'client' && (<label className={styles.fieldLabel}>
             Клієнт:
             <select
               name="clientId"
@@ -111,7 +110,7 @@ const EditOrderPage = ({ mode = 'new', initialData = null }) => {
                 </option>
               ))}
             </select>
-          </label>
+          </label>)}
 
           <label className={styles.fieldLabel}>
             Виконавець (Клінер):
