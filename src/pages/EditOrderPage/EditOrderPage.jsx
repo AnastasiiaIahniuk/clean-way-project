@@ -94,24 +94,26 @@ const EditOrderPage = ({ mode = 'new', initialData = null, role }) => {
             />
           </label>
 
-          {role !== 'client' && (<label className={styles.fieldLabel}>
-            Клієнт:
-            <select
-              name="clientId"
-              value={formData.clientId}
-              onChange={handleChange}
-              required
-              className={styles.inputField}
-            >
-              <option value="" disabled>Оберіть клієнта</option>
-              {clientsList.map(client => (
-                <option key={client.userId} value={client.userId}>
-                  {client.fullName}
-                </option>
-              ))}
-            </select>
-          </label>)}
+          {role !== 'client' && (
+            <label className={styles.fieldLabel}>
+              Клієнт:
+              <select
+                name="clientId"
+                value={formData.clientId}
+                onChange={handleChange}
+                required
+                className={styles.inputField}
+              >
+                <option value="" disabled>Оберіть клієнта</option>
+                {clientsList.map(client => (
+                  <option key={client.userId} value={client.userId}>
+                    {client.fullName}
+                  </option>
+                ))}
+              </select>
+            </label>)}
 
+          {role !== 'client' && (
           <label className={styles.fieldLabel}>
             Виконавець (Клінер):
             <select
@@ -129,6 +131,7 @@ const EditOrderPage = ({ mode = 'new', initialData = null, role }) => {
               ))}
             </select>
           </label>
+          )}
         </div>
 
         <div className={styles.formColumn}>
@@ -143,20 +146,23 @@ const EditOrderPage = ({ mode = 'new', initialData = null, role }) => {
             />
           </label>
 
-          <label className={styles.fieldLabel}>
-            Статус:
-            <select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-              className={styles.inputField}
-            >
-              <option>Новий</option>
-              <option>В процесі</option>
-              <option>Завершено</option>
-            </select>
-          </label>
-
+          {role !== 'client' && (
+            <label className={styles.fieldLabel}>
+              Статус:
+              <select
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                className={styles.inputField}
+              >
+                <option>Новий</option>
+                <option>В процесі</option>
+                <option>Завершено</option>
+              </select>
+            </label>
+          )}
+          
+          {role !== 'client' && (
           <label className={styles.fieldLabel}>
             Вартість:
             <input
@@ -168,6 +174,7 @@ const EditOrderPage = ({ mode = 'new', initialData = null, role }) => {
               className={styles.inputField}
             />
           </label>
+          )}
 
           <label className={styles.fieldLabel}>
             Деталі:

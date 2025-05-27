@@ -2,19 +2,18 @@ import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styles from './OrdersListPage.module.css';
 import useOrdersLogic from './useOrdersListLogic';
-import { Pencil, Trash2 } from 'lucide-react';
 
 const OrdersListPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { userId } = useParams();
 
-  const roleNames = {
-  admin: 'Адміністратор',
-  client: 'Клієнт',
-  manager: 'Менеджер',
-  cleaner: 'Клінер',
-};
+  //  const roleNames = {
+  //   admin: 'Адміністратор',
+  //   client: 'Клієнт',
+  //   manager: 'Менеджер',
+  //   cleaner: 'Клінер',
+  // };
 
   const {
     role,
@@ -24,10 +23,13 @@ const OrdersListPage = () => {
     filter,
     filteredOrders,
     selectedOrderId,
+    cancelPopup,
+    closeCancelPopup,
+    handleConfirmCancel,
+    handleRejectCancel,
     setFilter,
-    handleSelectOrder,
-    handleDeleteOrder,
-    handleEditOrder
+    handleEditOrder,
+    openCancelPopup
   } = useOrdersLogic({ location, navigate, userId });
 
   if (loading) {
@@ -73,16 +75,51 @@ const OrdersListPage = () => {
               <p className={styles.statusText}>Статус: {order.status}</p>
             </div>
             <div className={styles.iconGroup} onClick={(e) => e.stopPropagation()}>
-              <button onClick={() => handleEditOrder(order.orderId)} className={styles.iconButton}>
-                <Pencil size={18} />
+              <button onClick={() => handleEditOrder(order.orderId)} className={styles.editButton}>
+                <span>Редагувати ✎</span>
               </button>
-              <button onClick={() => handleDeleteOrder(order.orderId)} className={styles.iconButton}>
-                <Trash2 size={18} color="red" />
+              <button
+                onClick={(e) => { e.stopPropagation(); openCancelPopup(order.orderId); }}
+                className={styles.orangeBorderButton}
+              >
+                <span>Скасувати ×</span>
               </button>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Попап скасування */}
+      {cancelPopup.visible && (
+        <>
+          <div className={styles.popupBackground} onClick={closeCancelPopup} />
+          <div className={styles.popup} onClick={closeCancelPopup}>
+            <div className={styles.popupContent} onClick={e => e.stopPropagation()}>
+              {!cancelPopup.message && (
+                <>
+                  <h3>Ви впевнені, що хочете надіслати заявку на скасування замовлення?</h3>
+                  <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginTop: '20px' }}>
+                    <button className={styles.orangeBorderButton} onClick={handleConfirmCancel}>Так</button>
+                    <button className={styles.orangeBorderButton} onClick={handleRejectCancel}>Ні</button>
+                  </div>
+                </>
+              )}
+              {cancelPopup.message === 'success' && (
+                <>
+                  <h3>Заявка успішно надіслана!</h3>
+                  <button className={styles.button} onClick={closeCancelPopup}>ОК</button>
+                </>
+              )}
+              {cancelPopup.message === 'error' && (
+                <>
+                  <h3>Сталась помилка при відміні замовлення. Спробуйте, будь ласка, ще раз.</h3>
+                  <button className={styles.button} onClick={closeCancelPopup}>ОК</button>
+                </>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

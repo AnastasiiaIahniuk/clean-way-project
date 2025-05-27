@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+
 const mockedUsers = [{
   userId: 1,
   name: "Леся",
@@ -11,7 +12,7 @@ const mockedUsers = [{
 const mockedOrdersList = [
   {
     orderId: 1,
-    date: '12.05.2025',
+    date: '2025-05-12',
     client: 1,
     cleaner: 11,
     city: "Харків",
@@ -23,7 +24,7 @@ const mockedOrdersList = [
   },
   {
     orderId: 2,
-    date: '10.07.2024',
+    date: '2024-07-10',
     client: 1,
     cleaner: 11,
     city: "Харків",
@@ -35,7 +36,7 @@ const mockedOrdersList = [
   },
   {
     orderId: 3,
-    date: '01.03.2023',
+    date: '2023-03-01',
     client: 1,
     cleaner: 12,
     city: "Пісочин",
@@ -48,9 +49,9 @@ const mockedOrdersList = [
 ];
 
 const useOrdersLogic = ({ location, navigate, userId, orderId } = {}) => {
-  const [role, setRole] = useState('client'); // або 'admin'
-  const [firstName, setFirstName] = useState(mockedUsers[0].name);
-  const [lastName, setLastName] = useState(mockedUsers[0].surname);
+  const [role] = useState('client'); // або 'admin'
+  const [firstName] = useState(mockedUsers[0].name);
+  const [lastName] = useState(mockedUsers[0].surname);
 
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
@@ -58,6 +59,12 @@ const useOrdersLogic = ({ location, navigate, userId, orderId } = {}) => {
   const [showNewOrderForm, setShowNewOrderForm] = useState(false);
   const [newOrderName, setNewOrderName] = useState('');
   const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const [cancelPopup, setCancelPopup] = useState({
+    visible: false,
+    orderId: null,
+    message: null,
+  });
+
 
   useEffect(() => {
     setLoading(true);
@@ -91,19 +98,28 @@ const useOrdersLogic = ({ location, navigate, userId, orderId } = {}) => {
     setSelectedOrderId(orderId);
   };
 
-  const handleDeleteOrder = (orderId) => {
-    if (window.confirm('Ви впевнені, що хочете видалити замовлення?')) {
-      setOrders(prev => prev.filter(order => order.orderId !== orderId));
-      if (selectedOrderId === orderId) setSelectedOrderId(null);
-    }
-  };
-
   const handleEditOrder = (orderId) => {
     navigate(`/client/${userId}/orders/${orderId}/edit`);
   };
 
   const getOrderById = (orderId) => {
     return orders.find(order => order.orderId === orderId);
+  };
+
+  const openCancelPopup = (orderId) => {
+    setCancelPopup({ visible: true, orderId, message: null });
+  };
+
+  const closeCancelPopup = () => {
+    setCancelPopup({ visible: false, orderId: null, message: null });
+  };
+
+  const handleConfirmCancel = () => {
+    setCancelPopup(prev => ({ ...prev, message: 'success' }));
+  };
+
+  const handleRejectCancel = () => {
+    setCancelPopup(prev => ({ ...prev, message: 'error' }));
   };
 
   return {
@@ -116,14 +132,18 @@ const useOrdersLogic = ({ location, navigate, userId, orderId } = {}) => {
     showNewOrderForm,
     newOrderName,
     selectedOrderId,
+    cancelPopup,
+    closeCancelPopup,
+    handleConfirmCancel,
+    handleCreateNewOrder,
+    handleEditOrder,
+    handleRejectCancel,
+    handleSelectOrder,
+    openCancelPopup,
     setFilter,
     setShowNewOrderForm,
     setNewOrderName,
-    handleCreateNewOrder,
-    handleSelectOrder,
-    handleDeleteOrder,
-    handleEditOrder,
-    getOrderById
+    getOrderById,
   };
 };
 

@@ -109,8 +109,76 @@
   gap: 0.5rem;
 }
 
-.iconButton {
-  background: none;
-  border: none;
+.editButton {
+  background-color: transparent;
+  border: 2px solid #007BFF;
+  color: #007BFF; 
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.editButton:hover {
+  background-color: #007BFF;
+  color: white;
+}
+
+.orangeBorderButton {
+  background-color: transparent;
+  border: 2px solid orange;
+  color: orange;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.orangeBorderButton:hover {
+  background-color: orange;
+  color: white;
+}
+
+.popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  width: auto;
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.popupContent {
+  background-color: white;
+  padding: 20px 25px;
+  border-radius: 8px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.popupBackground {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+}
+
+.popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 20px 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+  max-width: 400px;
+  text-align: center;
 }
