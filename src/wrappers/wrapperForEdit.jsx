@@ -1,7 +1,7 @@
 import React , { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import EditOrderPage from '../pages/EditOrderPage/EditOrderPage';
-import UserRoleContext from './wrapperUserContext';
+import UserRoleContext from '../context/UserRoleContext';
 
 const EditOrderPageWrapper = ({ getOrderById }) => {
   const { orderId } = useParams();

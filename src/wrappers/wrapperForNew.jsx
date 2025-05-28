@@ -1,6 +1,6 @@
 import React , { useContext } from 'react';
 import EditOrderPage from '../pages/EditOrderPage/EditOrderPage';
-import UserRoleContext from './wrapperUserContext';
+import UserRoleContext from '../context/UserRoleContext';
 
 const OrderPageWrapperForNew = () => {
   const newOrder = {
