@@ -1,8 +1,10 @@
-import React from 'react';
+// OrderPage.jsx
+import React, { useContext } from 'react'; // Додано імпорт useContext
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './OrderPage.module.css';
 import { mockedOrdersList, mockedUsers } from '../../mocks/mockedData';
 import useOrderPageLogic from './useOrderPageLogic';
+import UserRoleContext from '../../context/UserRoleContext'; // Імпорт контексту
 
 const Popup = ({ visible, message, children, onClose }) => {
   if (!visible) return null;
@@ -25,7 +27,8 @@ const Popup = ({ visible, message, children, onClose }) => {
 };
 
 const OrderPage = () => {
-  const { orderId, role, userId } = useParams();
+  const { orderId, userId } = useParams();
+  const role = useContext(UserRoleContext); // Тепер роль береться з контексту
   const navigate = useNavigate();
 
   const { popupState, openPopup, closePopup } = useOrderPageLogic();

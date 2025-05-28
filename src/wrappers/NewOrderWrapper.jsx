@@ -1,8 +1,9 @@
-import React , { useContext } from 'react';
+// wrapperForNew.jsx
+import React, { useContext } from 'react';
 import EditOrderPage from '../pages/EditOrderPage/EditOrderPage';
 import UserRoleContext from '../context/UserRoleContext';
 
-const OrderPageWrapperForNew = () => {
+const NewOrderPageWrapper = () => {
   const newOrder = {
     date: '',
     city: '',
@@ -16,9 +17,9 @@ const OrderPageWrapperForNew = () => {
     details: ''
   };
 
-  const role = useContext(UserRoleContext);
+  const role = useContext(UserRoleContext); // роль тепер береться з контексту
 
   return <EditOrderPage order={newOrder} role={role} />;
 };
 
-export default OrderPageWrapperForNew;
+export default NewOrderPageWrapper;

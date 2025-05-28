@@ -9,6 +9,10 @@ const useOrdersLogic = ({ location, navigate, orderId } = {}) => {
   const [orders, setOrders] = useState([]);
   const [filter, setFilter] = useState('');
 
+  const getOrderById = (orderId) => {
+    return orders.find(order => order.orderId === orderId);
+  };
+
   const user = mockedUsers.find(u => u.role === role && u.userId === numericUserId);
 
   const [fullName, setFullName] = useState('');
@@ -44,6 +48,7 @@ const useOrdersLogic = ({ location, navigate, orderId } = {}) => {
     roleName,
     fullName,
     setFilter,
+    getOrderById
   };
 };
 
