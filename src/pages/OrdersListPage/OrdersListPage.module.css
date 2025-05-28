@@ -41,7 +41,6 @@
   font-size: 16px;
   outline: none;
   transition: border-color 0.3s;
-  max-width: 400px;
 }
 
 .input:focus {
@@ -71,7 +70,6 @@
   flex-direction: column;
   gap: 15px;
   text-align: left;
-  max-width: 700px;
   margin: 0 auto;
 }
 

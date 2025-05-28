@@ -33,8 +33,8 @@ const OrderPage = () => {
   const order = mockedOrdersList.find(o => o.orderId === parseInt(orderId));
   if (!order) return <div>Замовлення не знайдено.</div>;
 
-  const client = mockedUsers.find(u => u.userId === order.client);
-  const cleaner = mockedUsers.find(u => u.userId === order.cleaner);
+  const client = mockedUsers.find(u => u.userId === order.clientId);
+  const cleaner = mockedUsers.find(u => u.userId === order.cleanerId);
 
   const openCancelConfirm = () => openPopup({ type: 'cancelConfirm', orderId: order.orderId });
   const handleCancelConfirm = () => {
@@ -64,25 +64,24 @@ const OrderPage = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.orderTitle}>Замовлення № {orderId}</h2>
-      <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Назва:</span> {order.name}</div>
-      <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Дата:</span> {order.date}</div>
-      <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Статус:</span> {order.status}</div>
-      <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Вартість:</span> {order.cost} грн.</div>
-      <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Місто:</span> {order.city}</div>
-      <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Адреса:</span> {order.address}</div>
-      <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Деталі:</span> {order.details}</div>
-
       {['manager', 'cleaner'].includes(role) && client && (
         <div className={styles.orderDetailRow}>
           <span className={styles.orderDetailLabel}>Клієнт:</span> {client.name} {client.surname}
         </div>
       )}
 
-      {cleaner && (
-        <div className={styles.orderDetailRow}>
-          <span className={styles.orderDetailLabel}>Виконавець:</span> {cleaner.name} {cleaner.surname}
-        </div>
+      <div className={styles.orderDetailRow}>
+        <span className={styles.orderDetailLabel}>Виконавець:</span> {cleaner.name} {cleaner.surname}
+      </div>
+      <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Назва:</span> {order.name}</div>
+      <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Дата:</span> {order.date}</div>
+      <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Статус:</span> {order.status}</div>
+      {order.status !== 'Нове' && (
+      <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Вартість:</span> {order.cost} грн.</div>
       )}
+      <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Місто:</span> {order.city}</div>
+      <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Адреса:</span> {order.address}</div>
+      <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Деталі:</span> {order.details}</div>
 
       <div className={styles.buttonWrapper}>
         <button className={styles.button} onClick={() => navigate(-1)}>Назад</button>
