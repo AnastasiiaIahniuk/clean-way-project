@@ -14,15 +14,10 @@ const OrdersListPage = () => {
     filter,
     filteredOrders,
     selectedOrderId,
-    cancelPopup,
     fullName,
     roleName,
-    closeCancelPopup,
-    handleConfirmCancel,
-    handleRejectCancel,
     setFilter,
     handleEditOrder,
-    openCancelPopup
   } = useOrdersLogic({ location, navigate, userId });
 
   if (loading) {
@@ -49,10 +44,12 @@ const OrdersListPage = () => {
           className={styles.input}
         />
         {role !== 'cleaner' && role !== 'manager' && (
-        <button
-          className={styles.button}
-          onClick={() => navigate(`/${role}/${userId}/orders/newOrder`)}
-        >Створити нове замовлення</button>
+          <button
+            className={styles.button}
+            onClick={() => navigate(`/${role}/${userId}/orders/newOrder`)}
+          >
+            Створити нове замовлення
+          </button>
         )}
       </div>
 
@@ -73,48 +70,11 @@ const OrdersListPage = () => {
               <button onClick={() => handleEditOrder(order.orderId)} className={styles.editButton}>
                 <span>Редагувати ✎</span>
               </button>
-              <button
-                onClick={(e) => { e.stopPropagation(); openCancelPopup(order.orderId); }}
-                className={styles.orangeBorderButton}
-              >
-                <span>Скасувати ×</span>
-              </button>
+              {/* Кнопка скасування видалена */}
             </div>
           </div>
         ))}
       </div>
-
-      {/* Попап скасування */}
-      {cancelPopup.visible && (
-        <>
-          <div className={styles.popupBackground} onClick={closeCancelPopup} />
-          <div className={styles.popup} onClick={closeCancelPopup}>
-            <div className={styles.popupContent} onClick={e => e.stopPropagation()}>
-              {!cancelPopup.message && (
-                <>
-                  <h3>Ви впевнені, що хочете надіслати заявку на скасування замовлення?</h3>
-                  <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginTop: '20px' }}>
-                    <button className={styles.orangeBorderButton} onClick={handleConfirmCancel}>Так</button>
-                    <button className={styles.orangeBorderButton} onClick={handleRejectCancel}>Ні</button>
-                  </div>
-                </>
-              )}
-              {cancelPopup.message === 'success' && (
-                <>
-                  <h3>Заявка успішно надіслана!</h3>
-                  <button className={styles.button} onClick={closeCancelPopup}>ОК</button>
-                </>
-              )}
-              {cancelPopup.message === 'error' && (
-                <>
-                  <h3>Сталась помилка при відміні замовлення. Спробуйте, будь ласка, ще раз.</h3>
-                  <button className={styles.button} onClick={closeCancelPopup}>ОК</button>
-                </>
-              )}
-            </div>
-          </div>
-        </>
-      )}
     </div>
   );
 };

@@ -11,11 +11,6 @@ const useOrdersLogic = ({ location, navigate, orderId } = {}) => {
   const [showNewOrderForm, setShowNewOrderForm] = useState(false);
   const [newOrderName, setNewOrderName] = useState('');
   const [selectedOrderId, setSelectedOrderId] = useState(null);
-  const [cancelPopup, setCancelPopup] = useState({
-    visible: false,
-    orderId: null,
-    message: null,
-  });
 
   const user = mockedUsers.find(u => u.role === role && u.userId === numericUserId);
 
@@ -31,7 +26,6 @@ const useOrdersLogic = ({ location, navigate, orderId } = {}) => {
       setRoleName('');
     }
   }, [user, role]);
-
 
   useEffect(() => {
     setLoading(true);
@@ -73,22 +67,6 @@ const useOrdersLogic = ({ location, navigate, orderId } = {}) => {
     return orders.find(order => order.orderId === orderId);
   };
 
-  const openCancelPopup = (orderId) => {
-    setCancelPopup({ visible: true, orderId, message: null });
-  };
-
-  const closeCancelPopup = () => {
-    setCancelPopup({ visible: false, orderId: null, message: null });
-  };
-
-  const handleConfirmCancel = () => {
-    setCancelPopup(prev => ({ ...prev, message: 'success' }));
-  };
-
-  const handleRejectCancel = () => {
-    setCancelPopup(prev => ({ ...prev, message: 'error' }));
-  };
-
   return {
     role,
     loading,
@@ -97,16 +75,11 @@ const useOrdersLogic = ({ location, navigate, orderId } = {}) => {
     showNewOrderForm,
     newOrderName,
     selectedOrderId,
-    cancelPopup,
     roleName,
     fullName,
-    closeCancelPopup,
-    handleConfirmCancel,
     handleCreateNewOrder,
     handleEditOrder,
-    handleRejectCancel,
     handleSelectOrder,
-    openCancelPopup,
     setFilter,
     setShowNewOrderForm,
     setNewOrderName,

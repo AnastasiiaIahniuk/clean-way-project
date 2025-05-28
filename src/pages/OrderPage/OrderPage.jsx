@@ -88,7 +88,6 @@ const OrderPage = () => {
         {role === 'manager' && (
           <>
             <button className={styles.button} onClick={handleApprove}>Затвердити</button>
-            {/* Помаранчева кнопка Скасувати */}
             <button className={styles.orangeBorderButton} onClick={openCancelConfirm}>Скасувати ×</button>
           </>
         )}
