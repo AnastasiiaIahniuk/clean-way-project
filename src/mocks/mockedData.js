@@ -34,7 +34,7 @@ export const mockedOrdersList = [
     orderId: 1,
     date: '2025-05-12',
     clientId: 1,
-    cleanerId: 11,
+    cleanerId: 3,
     city: "Харків",
     address: "вул. Миру, 23б кв. 105",
     name: 'Прибирання "Все включено"',

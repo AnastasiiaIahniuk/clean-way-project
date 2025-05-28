@@ -18,9 +18,9 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path=":role/:userId/orders" element={<PrivateRoute allowedRoles={['client', 'manager', 'cleaner']}><OrdersListPage /></PrivateRoute>} />
-        <Route path="/client/:userId/orders/newOrder" element={<OrderPageWrapperForNew />} />
-        <Route path="/client/:userId/orders/:orderId/order" element={<OrderPage />} />
-        <Route path="/client/:userId/orders/:orderId/edit" element={<EditOrderPageWrapper getOrderById={ordersLogic.getOrderById} />}
+        <Route path="/:role/:userId/orders/newOrder" element={<PrivateRoute allowedRoles={['client', 'manager', 'cleaner']}><OrderPageWrapperForNew /></PrivateRoute>} />
+        <Route path="/:role/:userId/orders/:orderId/order" element={<PrivateRoute allowedRoles={['client', 'manager', 'cleaner']}><OrderPage /></PrivateRoute>} />
+        <Route path="/:role/:userId/orders/:orderId/edit" element={<PrivateRoute allowedRoles={['client', 'manager', 'cleaner']}><EditOrderPageWrapper getOrderById={ordersLogic.getOrderById} /></PrivateRoute>}
         />
       </Routes>
     </Router>

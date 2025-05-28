@@ -51,7 +51,7 @@ const OrdersListPage = () => {
         {role !== 'cleaner' && role !== 'manager' && (
         <button
           className={styles.button}
-          onClick={() => navigate(`/client/${userId}/orders/newOrder`)}
+          onClick={() => navigate(`/${role}/${userId}/orders/newOrder`)}
         >Створити нове замовлення</button>
         )}
       </div>
@@ -63,7 +63,7 @@ const OrdersListPage = () => {
           <div
             key={order.orderId}
             className={`${styles.orderCard} ${selectedOrderId === order.orderId ? styles.selected : ''}`}
-            onClick={() => navigate(`/client/${userId}/orders/${order.orderId}/order`)}
+            onClick={() => navigate(`/${role}/${userId}/orders/${order.orderId}/order`)}
           >
             <div>
               <strong>{order.name}</strong> — <em>{order.date}</em>

@@ -1,4 +1,3 @@
-/* Контейнер карточки замовлення */
 .container {
   max-width: 800px;
   margin: 80px auto;
@@ -10,8 +9,7 @@
   text-align: left;
 }
 
-/* Заголовок */
-h2 {
+.orderTitle {
   text-align: center;
   padding-bottom: 25px;
   font-weight: 600;
@@ -19,11 +17,12 @@ h2 {
   font-size: 1.8rem;
 }
 
-/* Стиль тексту в карточці */
 .orderDetailRow {
   margin-bottom: 18px;
   font-size: 1rem;
   color: #333;
+  text-align: left;
+  padding: 5px 15px;
 }
 
 .orderDetailLabel {
@@ -32,7 +31,6 @@ h2 {
   color: #555;
 }
 
-/* Кнопка повернення */
 .button {
   padding: 12px 25px;
   background-color: #007BFF;
@@ -45,7 +43,7 @@ h2 {
   transition: background-color 0.3s;
   white-space: nowrap;
   display: block;
-  margin: 30px auto 0 auto; /* Центруємо кнопку */
+  margin: 30px auto 0 auto;
   width: max-content;
 }
 
@@ -77,4 +75,36 @@ input:focus,
 select:focus,
 textarea:focus {
   border-color: #007BFF;
+}
+
+/* Повідомлення-попап */
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
+
+.popupCenter {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.popupContentNeutral {
+  background-color: white;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  text-align: center;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #333;
+  max-width: 400px;
+  width: 90%;
 }
