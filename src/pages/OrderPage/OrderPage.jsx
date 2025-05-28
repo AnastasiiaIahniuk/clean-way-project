@@ -1,26 +1,62 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './OrderPage.module.css';
 import { mockedOrdersList, mockedUsers } from '../../mocks/mockedData';
+import useOrderPageLogic from './useOrderPageLogic';
+
+const Popup = ({ visible, message, children, onClose }) => {
+  if (!visible) return null;
+
+  return (
+    <>
+      <div className={styles.popupOverlay} onClick={onClose} />
+      <div className={styles.popup} onClick={e => e.stopPropagation()}>
+        <div className={styles.popupContent}>
+          {message ? <h3>{message}</h3> : children}
+
+          {/* Кнопка OK тільки якщо немає children (тобто у простих повідомленнях) */}
+          {!children && (
+            <div className={styles.popupOkButtonWrapper}>
+              <button className={styles.button} onClick={onClose}>OK</button>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  );
+};
 
 const OrderPage = () => {
-  const { role, orderId } = useParams();
+  const { orderId, role } = useParams();
   const navigate = useNavigate();
-  const order = mockedOrdersList.find(o => o.orderId === parseInt(orderId));
-  const [approvalStatus, setApprovalStatus] = useState(null);
 
+  const { popupState, openPopup, closePopup } = useOrderPageLogic();
+
+  const order = mockedOrdersList.find(o => o.orderId === parseInt(orderId));
   if (!order) return <div>Замовлення не знайдено.</div>;
 
   const client = mockedUsers.find(u => u.userId === order.client);
   const cleaner = mockedUsers.find(u => u.userId === order.cleaner);
 
-  const handleApprove = () => {
+  const openCancelConfirm = () => openPopup({ type: 'cancelConfirm', orderId: order.orderId });
+  const handleCancelConfirm = () => {
     const success = Math.random() > 0.3;
-    setApprovalStatus(success ? 'success' : 'error');
+    openPopup({
+      type: 'cancelResult',
+      message: success
+        ? (role === 'client' ? 'Заявка успішно надіслана!' : 'Замовлення успішно скасовано!')
+        : (role === 'client' ? 'Сталася помилка при поданні заявки. Спробуйте ще раз.' : 'Сталася помилка при скасуванні замовлення. Спробуйте ще раз.'),
+      orderId: order.orderId,
+    });
   };
 
-  const handleClosePopup = () => {
-    setApprovalStatus(null);
+  const handleApprove = () => {
+    const success = Math.random() > 0.3;
+    openPopup({
+      type: 'approve',
+      message: success ? 'Замовлення успішно затверджено!' : 'Помилка при затвердженні замовлення. Спробуйте ще раз.',
+      orderId: order.orderId,
+    });
   };
 
   return (
@@ -46,28 +82,30 @@ const OrderPage = () => {
         </div>
       )}
 
-      <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+      <div className={styles.buttonWrapper}>
         <button className={styles.button} onClick={() => navigate(-1)}>Назад</button>
+
         {role === 'manager' && (
-          <button className={styles.button} onClick={handleApprove}>Затвердити</button>
+          <>
+            <button className={styles.button} onClick={handleApprove}>Затвердити</button>
+            {/* Помаранчева кнопка Скасувати */}
+            <button className={styles.orangeBorderButton} onClick={openCancelConfirm}>Скасувати ×</button>
+          </>
         )}
       </div>
 
-      {approvalStatus && (
-        <>
-          <div className={styles.popupOverlay} />
-          <div className={styles.popupCenter}>
-            <div className={styles.popupContentNeutral}>
-              {approvalStatus === 'success'
-                ? 'Замовлення успішно затверджено!'
-                : 'Помилка при затвердженні замовлення. Спробуйте ще раз.'}
-              <div style={{ marginTop: '20px' }}>
-                <button className={styles.button} onClick={handleClosePopup}>OK</button>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
+      {/* Попап з підтвердженням скасування */}
+      <Popup visible={popupState.visible && popupState.type === 'cancelConfirm'} message={popupState.message} onClose={closePopup}>
+        <h3>{role === 'client' ? 'Ви впевнені, що хочете подати заявку на скасування замовлення?' : 'Ви впевнені, що бажаєте скасувати замовлення?'}</h3>
+        <div className={styles.buttonWrapper}>
+          {/* Кнопки сині */}
+          <button className={styles.button} onClick={handleCancelConfirm}>Так</button>
+          <button className={styles.button} onClick={closePopup}>Ні</button>
+        </div>
+      </Popup>
+
+      {/* Попап з повідомленням скасування та затвердження */}
+      <Popup visible={popupState.visible && (popupState.type === 'cancelResult' || popupState.type === 'approve')} message={popupState.message} onClose={closePopup} />
     </div>
   );
 };

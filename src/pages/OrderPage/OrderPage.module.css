@@ -21,7 +21,6 @@
   margin-bottom: 18px;
   font-size: 1rem;
   color: #333;
-  text-align: left;
   padding: 5px 15px;
 }
 
@@ -31,6 +30,15 @@
   color: #555;
 }
 
+/* Центруємо кнопки у всіх місцях */
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Всі кнопки сині, окрім помаранчевої кнопки скасування */
 .button {
   padding: 12px 25px;
   background-color: #007BFF;
@@ -42,42 +50,32 @@
   cursor: pointer;
   transition: background-color 0.3s;
   white-space: nowrap;
-  display: block;
-  margin: 30px auto 0 auto;
-  width: max-content;
+  min-width: 100px;
 }
 
 .button:hover {
   background-color: #0056b3;
 }
 
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 10px 12px;
+/* Помаранчева кнопка скасування в основному інтерфейсі */
+.orangeBorderButton {
+  background-color: transparent;
+  border: 2px solid orange;
+  color: orange;
+  padding: 12px 25px;
   border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 15px;
-  font-family: inherit;
-  outline: none;
-  transition: border-color 0.3s;
-  box-sizing: border-box;
-  resize: vertical;
-  margin-top: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  min-width: 100px;
 }
 
-textarea {
-  min-height: 80px;
+.orangeBorderButton:hover {
+  background-color: orange;
+  color: white;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: #007BFF;
-}
-
-/* Повідомлення-попап */
+/* Оверлей для попапу */
 .popupOverlay {
   position: fixed;
   top: 0;
@@ -88,23 +86,36 @@ textarea:focus {
   z-index: 999;
 }
 
-.popupCenter {
+/* Центрований попап */
+.popup {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
-}
-
-.popupContentNeutral {
-  background-color: white;
+  background: white;
   padding: 25px 30px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   text-align: center;
+  z-index: 1000;
+  max-width: 400px;
+  width: 90%;
   font-weight: 500;
   font-size: 1rem;
   color: #333;
-  max-width: 400px;
-  width: 90%;
+}
+
+/* Контент у попапі */
+.popupContent {
+  text-align: center;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Центруємо кнопку OK у попапах */
+.popupOkButtonWrapper {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
