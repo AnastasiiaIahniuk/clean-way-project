@@ -13,8 +13,6 @@ const Popup = ({ visible, message, children, onClose }) => {
       <div className={styles.popup} onClick={e => e.stopPropagation()}>
         <div className={styles.popupContent}>
           {message ? <h3>{message}</h3> : children}
-
-          {/* Кнопка OK тільки якщо немає children (тобто у простих повідомленнях) */}
           {!children && (
             <div className={styles.popupOkButtonWrapper}>
               <button className={styles.button} onClick={onClose}>OK</button>
@@ -27,7 +25,7 @@ const Popup = ({ visible, message, children, onClose }) => {
 };
 
 const OrderPage = () => {
-  const { orderId, role } = useParams();
+  const { orderId, role, userId } = useParams();
   const navigate = useNavigate();
 
   const { popupState, openPopup, closePopup } = useOrderPageLogic();
@@ -59,6 +57,10 @@ const OrderPage = () => {
     });
   };
 
+  const handleEditOrder = () => {
+    navigate(`/${role}/${userId}/orders/${orderId}/edit`);
+  };
+
   return (
     <div className={styles.container}>
       <h2 className={styles.orderTitle}>Замовлення № {orderId}</h2>
@@ -88,6 +90,7 @@ const OrderPage = () => {
         {role === 'manager' && (
           <>
             <button className={styles.button} onClick={handleApprove}>Затвердити</button>
+            <button className={styles.button} onClick={handleEditOrder}>Редагувати ✎</button>
             <button className={styles.orangeBorderButton} onClick={openCancelConfirm}>Скасувати ×</button>
           </>
         )}
@@ -97,7 +100,6 @@ const OrderPage = () => {
       <Popup visible={popupState.visible && popupState.type === 'cancelConfirm'} message={popupState.message} onClose={closePopup}>
         <h3>{role === 'client' ? 'Ви впевнені, що хочете подати заявку на скасування замовлення?' : 'Ви впевнені, що бажаєте скасувати замовлення?'}</h3>
         <div className={styles.buttonWrapper}>
-          {/* Кнопки сині */}
           <button className={styles.button} onClick={handleCancelConfirm}>Так</button>
           <button className={styles.button} onClick={closePopup}>Ні</button>
         </div>

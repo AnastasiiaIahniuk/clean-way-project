@@ -13,11 +13,9 @@ const OrdersListPage = () => {
     loading,
     filter,
     filteredOrders,
-    selectedOrderId,
     fullName,
     roleName,
     setFilter,
-    handleEditOrder,
   } = useOrdersLogic({ location, navigate, userId });
 
   if (loading) {
@@ -26,15 +24,11 @@ const OrdersListPage = () => {
 
   return (
     <div className={styles.container}>
-      {/* User Info */}
       <div className={styles.userInfo}>
-        <h2 className={styles.roleTitle}>
-          {roleName || 'Гість'}
-        </h2>
+        <h2 className={styles.roleTitle}>{roleName || 'Гість'}</h2>
         <p className={styles.userName}>{fullName}</p>
       </div>
 
-      {/* Filter and Button */}
       <div className={styles.filterRow}>
         <input
           type="text"
@@ -53,24 +47,17 @@ const OrdersListPage = () => {
         )}
       </div>
 
-      {/* Orders List */}
       <div className={styles.orderList}>
         {filteredOrders.length === 0 && <p>Замовлень не знайдено.</p>}
         {filteredOrders.map(order => (
           <div
             key={order.orderId}
-            className={`${styles.orderCard} ${selectedOrderId === order.orderId ? styles.selected : ''}`}
+            className={styles.orderCard}
             onClick={() => navigate(`/${role}/${userId}/orders/${order.orderId}/order`)}
           >
             <div>
               <strong>{order.name}</strong> — <em>{order.date}</em>
               <p className={styles.statusText}>Статус: {order.status}</p>
-            </div>
-            <div className={styles.iconGroup} onClick={(e) => e.stopPropagation()}>
-              <button onClick={() => handleEditOrder(order.orderId)} className={styles.editButton}>
-                <span>Редагувати ✎</span>
-              </button>
-              {/* Кнопка скасування видалена */}
             </div>
           </div>
         ))}
