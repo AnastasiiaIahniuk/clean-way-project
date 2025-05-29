@@ -88,14 +88,14 @@ const OrderPage = () => {
 
       <div className={styles.buttonWrapper}>
         <button className={styles.button} onClick={() => navigate(-1)}>Назад</button>
-
-        {/* Тепер "Редагувати" і "Скасувати" доступні клієнтам */}
-        {(role === 'manager' || role === 'client') && (
+        {(role === 'manager' || role === 'client' || role === 'cleaner') && (
           <>
-            {role === 'manager' && (
+            {(role === 'manager' || role === 'cleaner') && (
               <button className={styles.button} onClick={handleApprove}>Затвердити</button>
             )}
+            {(role === 'manager' || role === 'client') && (
             <button className={styles.button} onClick={handleEditOrder}>Редагувати ✎</button>
+            )}
             <button className={styles.orangeBorderButton} onClick={openCancelConfirm}>Скасувати ×</button>
           </>
         )}
@@ -103,7 +103,7 @@ const OrderPage = () => {
 
       {/* Попапи */}
       <Popup visible={popupState.visible && popupState.type === 'cancelConfirm'} message={popupState.message} onClose={closePopup}>
-        <h3>{role === 'client' ? 'Ви впевнені, що хочете подати заявку на скасування замовлення?' : 'Ви впевнені, що бажаєте скасувати замовлення?'}</h3>
+        <h3>{role === 'manager' ? 'Ви впевнені, що бажаєте скасувати замовлення?': 'Ви впевнені, що хочете подати заявку на скасування замовлення?' }</h3>
         <div className={styles.buttonWrapper}>
           <button className={styles.button} onClick={handleCancelConfirm}>Так</button>
           <button className={styles.button} onClick={closePopup}>Ні</button>
