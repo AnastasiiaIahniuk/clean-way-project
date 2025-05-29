@@ -52,7 +52,11 @@ const EditOrderPage = ({ mode = 'new', initialData = null, role }) => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.roleTitle}>{mode === 'new' ? 'Створити нове замовлення' : 'Редагувати замовлення'}</h2>
+      <h2 className={styles.roleTitle}>
+        {mode === 'new'
+          ? 'Створити нове замовлення'
+          : `Редагувати замовлення №${initialData?.orderId || ''}`}
+      </h2>
 
       <form className={styles.newOrderForm} onSubmit={handleSubmit}>
         <div className={styles.formColumn}>

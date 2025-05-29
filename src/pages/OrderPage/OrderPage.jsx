@@ -1,10 +1,9 @@
-// OrderPage.jsx
-import React, { useContext } from 'react'; // Додано імпорт useContext
+import React, { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './OrderPage.module.css';
 import { mockedOrdersList, mockedUsers } from '../../mocks/mockedData';
 import useOrderPageLogic from './useOrderPageLogic';
-import UserRoleContext from '../../context/UserRoleContext'; // Імпорт контексту
+import UserRoleContext from '../../context/UserRoleContext';
 
 const Popup = ({ visible, message, children, onClose }) => {
   if (!visible) return null;
@@ -28,7 +27,7 @@ const Popup = ({ visible, message, children, onClose }) => {
 
 const OrderPage = () => {
   const { orderId, userId } = useParams();
-  const role = useContext(UserRoleContext); // Тепер роль береться з контексту
+  const role = useContext(UserRoleContext);
   const navigate = useNavigate();
 
   const { popupState, openPopup, closePopup } = useOrderPageLogic();
@@ -67,7 +66,8 @@ const OrderPage = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.orderTitle}>Замовлення № {orderId}</h2>
-      {['manager', 'cleaner'].includes(role) && client && (
+
+      {['manager', 'cleaner', 'client'].includes(role) && client && (
         <div className={styles.orderDetailRow}>
           <span className={styles.orderDetailLabel}>Клієнт:</span> {client.name} {client.surname}
         </div>
@@ -80,7 +80,7 @@ const OrderPage = () => {
       <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Дата:</span> {order.date}</div>
       <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Статус:</span> {order.status}</div>
       {order.status !== 'Нове' && (
-      <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Вартість:</span> {order.cost} грн.</div>
+        <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Вартість:</span> {order.cost} грн.</div>
       )}
       <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Місто:</span> {order.city}</div>
       <div className={styles.orderDetailRow}><span className={styles.orderDetailLabel}>Адреса:</span> {order.address}</div>
@@ -89,16 +89,19 @@ const OrderPage = () => {
       <div className={styles.buttonWrapper}>
         <button className={styles.button} onClick={() => navigate(-1)}>Назад</button>
 
-        {role === 'manager' && (
+        {/* Тепер "Редагувати" і "Скасувати" доступні клієнтам */}
+        {(role === 'manager' || role === 'client') && (
           <>
-            <button className={styles.button} onClick={handleApprove}>Затвердити</button>
+            {role === 'manager' && (
+              <button className={styles.button} onClick={handleApprove}>Затвердити</button>
+            )}
             <button className={styles.button} onClick={handleEditOrder}>Редагувати ✎</button>
             <button className={styles.orangeBorderButton} onClick={openCancelConfirm}>Скасувати ×</button>
           </>
         )}
       </div>
 
-      {/* Попап з підтвердженням скасування */}
+      {/* Попапи */}
       <Popup visible={popupState.visible && popupState.type === 'cancelConfirm'} message={popupState.message} onClose={closePopup}>
         <h3>{role === 'client' ? 'Ви впевнені, що хочете подати заявку на скасування замовлення?' : 'Ви впевнені, що бажаєте скасувати замовлення?'}</h3>
         <div className={styles.buttonWrapper}>
@@ -107,7 +110,6 @@ const OrderPage = () => {
         </div>
       </Popup>
 
-      {/* Попап з повідомленням скасування та затвердження */}
       <Popup visible={popupState.visible && (popupState.type === 'cancelResult' || popupState.type === 'approve')} message={popupState.message} onClose={closePopup} />
     </div>
   );
