@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './EditOrderPage.module.css';
 import { useNavigate } from 'react-router-dom';
-
-const clientsList = [
-  { userId: 1, fullName: 'Іван Іваненко' },
-  { userId: 2, fullName: 'Марія Петренко' },
-  { userId: 3, fullName: 'Олег Коваленко' },
-];
-
-const executorsList = [
-  { userId: 1, fullName: 'Анна Сидоренко' },
-  { userId: 2, fullName: 'Петро Мельник' },
-  { userId: 3, fullName: 'Оксана Кравченко' },
-];
+import { clientsList, cleanersList } from '../../mocks/mockedData';
 
 const EditOrderPage = ({ mode = 'new', initialData = null, role }) => {
   const [formData, setFormData] = useState({
@@ -20,7 +9,7 @@ const EditOrderPage = ({ mode = 'new', initialData = null, role }) => {
     date: '',
     city: '',
     clientId: '',
-    executorId: '',
+    cleanerId: '',
     address: '',
     status: 'Новий',
     price: '',
@@ -32,7 +21,17 @@ const EditOrderPage = ({ mode = 'new', initialData = null, role }) => {
 
   useEffect(() => {
     if (mode === 'edit' && initialData) {
-      setFormData(initialData);
+      setFormData({
+        name: initialData.name || '',
+        date: initialData.date || '',
+        city: initialData.city || '',
+        clientId: initialData.clientId ?? '',
+        cleanerId: initialData.cleanerId ?? '',
+        address: initialData.address || '',
+        status: initialData.status || 'Новий',
+        price: initialData.price !== undefined && initialData.price !== null ? initialData.price : '',
+        details: initialData.details || '',
+      });
     }
   }, [mode, initialData]);
 
@@ -111,26 +110,27 @@ const EditOrderPage = ({ mode = 'new', initialData = null, role }) => {
                   </option>
                 ))}
               </select>
-            </label>)}
+            </label>
+          )}
 
           {role !== 'client' && (
-          <label className={styles.fieldLabel}>
-            Виконавець (Клінер):
-            <select
-              name="executorId"
-              value={formData.executorId}
-              onChange={handleChange}
-              required
-              className={styles.inputField}
-            >
-              <option value="" disabled>Оберіть виконавця</option>
-              {executorsList.map(executor => (
-                <option key={executor.userId} value={executor.userId}>
-                  {executor.fullName}
-                </option>
-              ))}
-            </select>
-          </label>
+            <label className={styles.fieldLabel}>
+              Виконавець (Клінер):
+              <select
+                name="cleanerId"
+                value={formData.cleanerId}
+                onChange={handleChange}
+                required
+                className={styles.inputField}
+              >
+                <option value="" disabled>Оберіть виконавця</option>
+                {cleanersList.map(cleaner => (
+                  <option key={cleaner.userId} value={cleaner.userId}>
+                    {cleaner.fullName}
+                  </option>
+                ))}
+              </select>
+            </label>
           )}
         </div>
 
@@ -161,19 +161,19 @@ const EditOrderPage = ({ mode = 'new', initialData = null, role }) => {
               </select>
             </label>
           )}
-          
+
           {role !== 'client' && (
-          <label className={styles.fieldLabel}>
-            Вартість:
-            <input
-              name="price"
-              type="number"
-              value={formData.price}
-              onChange={handleChange}
-              min="0"
-              className={styles.inputField}
-            />
-          </label>
+            <label className={styles.fieldLabel}>
+              Вартість:
+              <input
+                name="price"
+                type="number"
+                value={formData.price}
+                onChange={handleChange}
+                min="0"
+                className={styles.inputField}
+              />
+            </label>
           )}
 
           <label className={styles.fieldLabel}>
@@ -188,14 +188,14 @@ const EditOrderPage = ({ mode = 'new', initialData = null, role }) => {
           </label>
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <div className={styles.buttonContainer}>
+          <button className={styles.button} onClick={() => navigate(-1)}>Назад</button>
           <button type="submit" className={styles.button}>
             {mode === 'new' ? 'Зберегти нове замовлення' : 'Оновити замовлення'}
           </button>
         </div>
       </form>
 
-      {/* Попап після створення нового замовлення */}
       {showPopup && (
         <div className={styles.popup}>
           <div className={styles.popupContent}>

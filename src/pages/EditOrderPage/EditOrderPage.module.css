@@ -7,17 +7,6 @@ h2 {
     padding-bottom: 25px;
 }
 
-.container {
-  max-width: 80%;
-  margin: 80px auto;
-  padding: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  border-radius: 12px;
-  background-color: #f0f4f8;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-}
-
 .userInfo {
   margin-bottom: 25px;
 }
@@ -122,7 +111,9 @@ h2 {
 }
 
 .container {
+  position: relative;
   max-width: 800px;
+  height: 580px;
   margin: 80px auto;
   padding: 20px 30px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -163,7 +154,7 @@ h2 {
 }
 
 .newOrderForm textarea {
-  min-height: 70px;
+  min-height: 130px;
 }
 
 .newOrderForm input[type="text"]:focus,
@@ -322,4 +313,17 @@ newOrderForm {
 
 .popup button:hover {
   background-color: #0056b3;
+}
+
+.buttonContainer {
+  position: absolute;
+  bottom: 30px;
+}
+
+.buttonContainer button {
+  margin: 0 120px;
+}
+
+.not-found {
+  color: #0056b3;
 }

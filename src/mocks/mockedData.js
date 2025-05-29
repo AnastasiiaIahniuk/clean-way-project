@@ -67,3 +67,15 @@ export const mockedOrdersList = [
     details: "Балкон включно."
   },
 ];
+
+export const clientsList = [
+  { userId: 1, fullName: 'Леся Українка' },
+  { userId: 4, fullName: 'Марко Вовчок' },
+  { userId: 5, fullName: 'Іван Котляревський' },
+];
+
+export const cleanersList = [
+  { userId: 3, fullName: 'Тарас Шевченко' },
+  { userId: 6, fullName: 'Василь Стус' },
+  { userId: 7, fullName: 'Павло Тичина' },
+];
