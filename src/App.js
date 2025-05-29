@@ -24,6 +24,7 @@ const RoleProviderWrapper = ({ children }) => {
 
 const App = () => {
   const ordersLogic = useOrdersLogic();
+  const roles = ['client', 'manager', 'cleaner', 'admin'];
 
   return (
     <Router>
@@ -33,28 +34,28 @@ const App = () => {
         {/* Для маршрутів із :role/:userId */}
         <Route path="/:role/:userId/orders" element={
           <RoleProviderWrapper>
-            <PrivateRoute allowedRoles={['client', 'manager', 'cleaner']}>
+            <PrivateRoute allowedRoles={roles}>
               <OrdersListPage />
             </PrivateRoute>
           </RoleProviderWrapper>
         } />
         <Route path="/:role/:userId/orders/newOrder" element={
           <RoleProviderWrapper>
-            <PrivateRoute allowedRoles={['client', 'manager', 'cleaner']}>
+            <PrivateRoute allowedRoles={[roles[0]]}>
               <NewOrderWrapper />
             </PrivateRoute>
           </RoleProviderWrapper>
         } />
         <Route path="/:role/:userId/orders/:orderId/order" element={
           <RoleProviderWrapper>
-            <PrivateRoute allowedRoles={['client', 'manager', 'cleaner']}>
+            <PrivateRoute allowedRoles={[roles[0], roles[1], roles[2]]}>
               <OrderPage />
             </PrivateRoute>
           </RoleProviderWrapper>
         } />
         <Route path="/:role/:userId/orders/:orderId/edit" element={
           <RoleProviderWrapper>
-            <PrivateRoute allowedRoles={['client', 'manager', 'cleaner']}>
+            <PrivateRoute allowedRoles={[roles[0], roles[1]]}>
               <EditOrderWrapper getOrderById={ordersLogic.getOrderById} />
             </PrivateRoute>
           </RoleProviderWrapper>

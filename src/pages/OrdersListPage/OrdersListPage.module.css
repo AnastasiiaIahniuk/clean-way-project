@@ -61,8 +61,22 @@
   min-width: 150px;
 }
 
-.button:hover {
+.button:hover:not(:disabled) {
   background-color: #0056b3;
+}
+
+.button:disabled,
+.button[disabled] {
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+.greenButton {
+  background-color: #28a745;
+}
+
+.greenButton:hover:not(:disabled) {
+  background-color: #1e7e34;
 }
 
 .orderList {
@@ -75,7 +89,7 @@
 
 .orderCard {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   border: 1px solid #ddd;
   padding: 15px;
@@ -93,4 +107,40 @@
   color: #888;
   font-size: 0.9rem;
   margin-top: 4px;
+}
+
+/* Попап стилі */
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  text-align: center;
+  z-index: 1000;
+  max-width: 400px;
+  width: 90%;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #333;
+}
+
+.popupContent {
+  text-align: center;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #333;
 }

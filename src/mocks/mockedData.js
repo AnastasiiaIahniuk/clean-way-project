@@ -27,6 +27,13 @@ export const mockedUsers = [
     role: "cleaner",
     email: "cleaner@example.com"
   },
+  {
+    userId: 4,
+    name: "Марко",
+    surname: "Вовчок",
+    role: "admin",
+    email: "admin@example.com"
+  },
 ];
 
 export const mockedOrdersList = [

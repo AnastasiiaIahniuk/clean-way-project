@@ -17,6 +17,9 @@ const useLoginLogic = (navigate) => {
     } else if (email === 'cleaner@example.com' && password === '123456') {
       localStorage.setItem('userRole', 'cleaner');
       navigate('/cleaner/3/orders', { state: { role: 'cleaner' } });
+    } else if (email === 'admin@example.com' && password === '123456') {
+      localStorage.setItem('userRole', 'admin');
+      navigate('/admin/4/orders', { state: { role: 'admin' } });
     } else {
       setError('Неправильний email або пароль');
     }
