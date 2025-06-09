@@ -69,7 +69,7 @@ export const mockedOrdersList = [
     city: "Пісочин",
     address: "вул. Зелена, 3б, кв. 1",
     name: 'Помити вікна',
-    status: 'Виконано',
+    status: 'Завершене',
     cost: 1250,
     details: "Балкон включно."
   },

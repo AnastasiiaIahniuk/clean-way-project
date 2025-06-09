@@ -12,12 +12,12 @@ const NewOrderPageWrapper = () => {
     executorFirstName: '',
     executorLastName: '',
     address: '',
-    status: 'Новий',
+    status: 'Нове',
     price: 0,
     details: ''
   };
 
-  const role = useContext(UserRoleContext); // роль тепер береться з контексту
+  const role = useContext(UserRoleContext);
 
   return <EditOrderPage order={newOrder} role={role} />;
 };

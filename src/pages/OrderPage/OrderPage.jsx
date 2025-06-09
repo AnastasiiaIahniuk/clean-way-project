@@ -29,7 +29,6 @@ const OrderPage = () => {
   const { orderId, userId } = useParams();
   const role = useContext(UserRoleContext);
   const navigate = useNavigate();
-
   const { popupState, openPopup, closePopup } = useOrderPageLogic();
 
   const order = mockedOrdersList.find(o => o.orderId === parseInt(orderId));
@@ -59,8 +58,12 @@ const OrderPage = () => {
     });
   };
 
-  const handleEditOrder = () => {
-    navigate(`/${role}/${userId}/orders/${orderId}/edit`);
+  const handleUpdateStatus = () => {
+    openPopup({
+      type: 'updateStatus',
+      message: 'Оновіть статус замовлення',
+      orderId: order.orderId,
+    });
   };
 
   return (
@@ -88,29 +91,46 @@ const OrderPage = () => {
 
       <div className={styles.buttonWrapper}>
         <button className={styles.button} onClick={() => navigate(-1)}>Назад</button>
+        {role === 'cleaner' && (
+          <button className={styles.button} onClick={handleUpdateStatus}>Оновити статус</button>
+        )}
         {(role === 'manager' || role === 'client' || role === 'cleaner') && (
           <>
             {(role === 'manager' || role === 'cleaner') && (
               <button className={styles.button} onClick={handleApprove}>Затвердити</button>
             )}
             {(role === 'manager' || role === 'client') && (
-            <button className={styles.button} onClick={handleEditOrder}>Редагувати ✎</button>
+              <button className={styles.button} onClick={() => navigate(`/${role}/${userId}/orders/${orderId}/edit`)}>Редагувати ✎</button>
             )}
             <button className={styles.orangeBorderButton} onClick={openCancelConfirm}>Скасувати ×</button>
           </>
         )}
       </div>
 
-      {/* Попапи */}
+      {/* Popups */}
       <Popup visible={popupState.visible && popupState.type === 'cancelConfirm'} message={popupState.message} onClose={closePopup}>
-        <h3>{role === 'manager' ? 'Ви впевнені, що бажаєте скасувати замовлення?': 'Ви впевнені, що хочете подати заявку на скасування замовлення?' }</h3>
+        <h3>{role === 'manager' ? 'Ви впевнені, що бажаєте скасувати замовлення?' : 'Ви впевнені, що хочете подати заявку на скасування замовлення?'}</h3>
         <div className={styles.buttonWrapper}>
           <button className={styles.button} onClick={handleCancelConfirm}>Так</button>
           <button className={styles.button} onClick={closePopup}>Ні</button>
         </div>
       </Popup>
 
-      <Popup visible={popupState.visible && (popupState.type === 'cancelResult' || popupState.type === 'approve')} message={popupState.message} onClose={closePopup} />
+      <Popup visible={popupState.visible && popupState.type === 'cancelResult'} message={popupState.message} onClose={closePopup} />
+      <Popup visible={popupState.visible && popupState.type === 'approve'} message={popupState.message} onClose={closePopup} />
+
+      {/* Popup for updating status */}
+      <Popup visible={popupState.visible && popupState.type === 'updateStatus'} onClose={closePopup}>
+        <h3>Оновити статус замовлення</h3>
+        <select className={styles.statusDropdown}>
+          <option value="inProgress">Виконується</option>
+          <option value="completed">Виконано</option>
+        </select>
+        <div className={styles.buttonWrapper}>
+          <button className={styles.button} onClick={closePopup}>Назад</button>
+          <button className={styles.button} onClick={closePopup}>Затвердити</button>
+        </div>
+      </Popup>
     </div>
   );
 };

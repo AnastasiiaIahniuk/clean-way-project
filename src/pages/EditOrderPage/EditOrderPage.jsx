@@ -11,7 +11,7 @@ const EditOrderPage = ({ mode = 'new', initialData = null, role }) => {
     clientId: '',
     cleanerId: '',
     address: '',
-    status: 'Новий',
+    status: 'Нове',
     price: '',
     details: '',
   });
@@ -28,7 +28,7 @@ const EditOrderPage = ({ mode = 'new', initialData = null, role }) => {
         clientId: initialData.clientId ?? '',
         cleanerId: initialData.cleanerId ?? '',
         address: initialData.address || '',
-        status: initialData.status || 'Новий',
+        status: initialData.status || 'Нове',
         price: initialData.price !== undefined && initialData.price !== null ? initialData.price : '',
         details: initialData.details || '',
       });
@@ -159,9 +159,11 @@ const EditOrderPage = ({ mode = 'new', initialData = null, role }) => {
                 onChange={handleChange}
                 className={styles.inputField}
               >
-                <option>Новий</option>
-                <option>В процесі</option>
-                <option>Завершено</option>
+                <option>Нове</option>
+                <option>В обробці</option>
+                <option>Виконується</option>
+                <option>Виконане</option>
+                <option>Завершене</option>
               </select>
             </label>
           )}
